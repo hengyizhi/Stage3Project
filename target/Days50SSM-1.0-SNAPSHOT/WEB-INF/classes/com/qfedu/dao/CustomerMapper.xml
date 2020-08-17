@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+  mybatis的第二种事件方式
+    xml + 接口的方式
+      特点：xml中的namespace必须为接口的全路径
+        xml中的每个节点的id必须为接口的方法名
+-->
+<mapper namespace="com.qfedu.dao.ICustomerDao">
+
+    <select id="getAllCustomers" resultType="Customer">
+    select * from  Customer
+  </select>
+
+<!--    <select id="getCustomerByCid" resultType="Customer">-->
+<!--    select * from  Customer where cid = #{cid}-->
+<!--  </select>-->
+
+    <insert id="saveCustomer">
+    insert into Customer values(#{cid}, #{cname}, #{password}, #{nickname}, #{addr}, #{money}, #{cstate})
+  </insert>
+
+    <insert id="deleteCustomer">
+    delete from Customer where cid = #{cid}
+  </insert>
+
+    <insert id="updateCustomer">
+    update Customer set cname=#{cname}, password=#{password}, nickname=#{nickname}, addr=#{addr}, money=#{money}, cstate=#{cstate} where cid=#{cid}
+  </insert>
+  <delete id="deleteCustomers">
+    delete
+    from customer
+    where cid in
+    <foreach collection="list" item="cid" open="(" close=")" separator=",">
+      #{cid}
+    </foreach>
+  </delete>
+
+</mapper>
